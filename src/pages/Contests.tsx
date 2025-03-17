@@ -3,13 +3,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Bookmark, Video, Clock, Filter } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { supabase } from '../lib/supabase'; // Assuming Supabase client setup
+import { supabase } from '../lib/supabase';
 
-/**
- * Contest Tracker page for Contesso.
- * Fetches upcoming and past contests from Codeforces, CodeChef, and LeetCode,
- * with filters, bookmarking, and solution links from YouTube playlists.
- */
 interface Contest {
   id: string;
   title: string;
@@ -25,17 +20,18 @@ export default function Contests() {
   const [filteredContests, setFilteredContests] = useState<Contest[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set(['Codeforces', 'CodeChef', 'LeetCode']));
   const [showPast, setShowPast] = useState(false);
+  const [selectedContestForSolution, setSelectedContestForSolution] = useState('');
+  const [solutionLink, setSolutionLink] = useState('');
 
-  // Mock fetch function (replace with real API calls)
+  // Fetch contests from platforms (mock data for now)
   const fetchContests = async () => {
     const mockContests: Contest[] = [
       { id: 'cf1', title: 'Codeforces Round 930', platform: 'Codeforces', startTime: '2025-03-20T14:00:00Z', duration: 120, isBookmarked: false },
       { id: 'lc1', title: 'Weekly Contest 441', platform: 'LeetCode', startTime: '2025-03-15T19:30:00-07:00', duration: 90, isBookmarked: false },
       { id: 'cc1', title: 'CodeChef Starters 120', platform: 'CodeChef', startTime: '2025-03-18T15:00:00Z', duration: 180, isBookmarked: false },
-      { id: 'cf2', title: 'Codeforces Round 929', platform: 'Codeforces', startTime: '2025-03-10T14:00:00Z', duration: 120, isBookmarked: false, solutionLink: 'https://www.youtube.com/playlist?list=PLcXpkI9A-RZLUfBSNp-YQBCOezZKbDSgB' },
+      { id: 'cf2', title: 'Codeforces Round 929', platform: 'Codeforces', startTime: '2025-03-10T14:00:00Z', duration: 120, isBookmarked: false },
     ];
 
-    // Fetch solution links from Supabase
     const { data: solutions } = await supabase.from('contest_solutions').select('contest_id, solution_link');
     const solutionMap = new Map(solutions?.map(s => [s.contest_id, s.solution_link]));
 
@@ -47,7 +43,24 @@ export default function Contests() {
     setContests(contestsWithSolutions);
   };
 
-  // Filter contests based on platform and past/upcoming
+  // Auto-fetch YouTube solution links (mock for now)
+  const autoFetchSolutionLinks = async () => {
+    const playlists = {
+      Codeforces: 'https://www.youtube.com/playlist?list=PLcXpkI9A-RZLUfBSNp-YQBCOezZKbDSgB',
+      LeetCode: 'https://www.youtube.com/playlist?list=PLcXpkI9A-RZI6FhydNz3JBt_-p_i25Cbr',
+      CodeChef: 'https://www.youtube.com/playlist?list=PLcXpkI9A-RZIZ6lsE0KCcLWeKNoG45fYr',
+    };
+
+    const mockLinks = [
+      { contestId: 'cf2', link: 'https://www.youtube.com/watch?v=example_cf' },
+    ];
+
+    for (const { contestId, link } of mockLinks) {
+      await supabase.from('contest_solutions').upsert({ contest_id: contestId, solution_link: link }, { onConflict: 'contest_id' });
+    }
+  };
+
+  // Filter contests
   useEffect(() => {
     const now = new Date();
     const filtered = contests.filter(contest => {
@@ -60,11 +73,33 @@ export default function Contests() {
   // Initial fetch
   useEffect(() => {
     fetchContests();
+    autoFetchSolutionLinks();
   }, []);
 
-  // Toggle bookmark
-  const toggleBookmark = (id: string) => {
-    setContests(contests.map(c => c.id === id ? { ...c, isBookmarked: !c.isBookmarked } : c));
+  // Toggle bookmark and save to Supabase
+  const toggleBookmark = async (id: string) => {
+    const updatedContests = contests.map(c => 
+      c.id === id ? { ...c, isBookmarked: !c.isBookmarked } : c
+    );
+    setContests(updatedContests);
+
+    const bookmarkedContests = updatedContests.filter(c => c.isBookmarked);
+    await supabase.from('bookmarks').upsert(
+      bookmarkedContests.map(c => ({
+        contest_id: c.id,
+        title: c.title,
+        platform: c.platform,
+        start_time: c.startTime,
+        duration: c.duration,
+      })),
+      { onConflict: 'contest_id' }
+    );
+
+    // Remove from bookmarks if unbookmarked
+    const unbookmarked = contests.find(c => c.id === id && !c.isBookmarked);
+    if (unbookmarked) {
+      await supabase.from('bookmarks').delete().eq('contest_id', id);
+    }
   };
 
   // Toggle platform filter
@@ -87,10 +122,30 @@ export default function Contests() {
     return `${days}d ${hours}h ${minutes}m`;
   };
 
+  // Handle solution link submission
+  const handleSolutionSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedContestForSolution || !solutionLink) return;
+
+    const { error } = await supabase
+      .from('contest_solutions')
+      .upsert({ contest_id: selectedContestForSolution, solution_link: solutionLink }, { onConflict: 'contest_id' });
+
+    if (!error) {
+      alert('Solution link added successfully!');
+      setContests(contests.map(c => 
+        c.id === selectedContestForSolution ? { ...c, solutionLink } : c
+      ));
+      setSelectedContestForSolution('');
+      setSolutionLink('');
+    } else {
+      alert('Error adding solution link.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white py-16 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <h1 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
           Contest Tracker
         </h1>
@@ -180,11 +235,42 @@ export default function Contests() {
           ))}
         </div>
 
-        {/* Admin Link */}
-        <div className="text-center mt-12">
-          <Link to="/add-solution" className="text-indigo-600 dark:text-indigo-400 hover:underline">
-            Add Solution Link (Admin)
-          </Link>
+        {/* Add Solution Form */}
+        <div className="mt-12 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-800">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Add Solution Link (Team Only)</h2>
+          <form onSubmit={handleSolutionSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Select Past Contest</label>
+              <select
+                value={selectedContestForSolution}
+                onChange={e => setSelectedContestForSolution(e.target.value)}
+                className="w-full p-3 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+              >
+                <option value="">-- Select a contest --</option>
+                {contests.filter(c => new Date(c.startTime) < new Date()).map(contest => (
+                  <option key={contest.id} value={contest.id}>
+                    {contest.title} ({contest.platform})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">YouTube Solution Link</label>
+              <input
+                type="url"
+                value={solutionLink}
+                onChange={e => setSolutionLink(e.target.value)}
+                placeholder="https://www.youtube.com/..."
+                className="w-full p-3 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full p-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-all duration-200"
+            >
+              Add Solution
+            </button>
+          </form>
         </div>
       </div>
     </div>
