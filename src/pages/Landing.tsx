@@ -1,147 +1,177 @@
 // src/pages/Landing.tsx
 import { Link } from 'react-router-dom';
-import { ArrowRight, Trophy, Bookmark, Video, Twitter, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, BarChart2, Trophy, Bookmark, Video, Twitter, Github, Linkedin, Mail } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
 
 /**
- * A cutting-edge landing page for Contesso Contest Tracker.
- * Features a sleek animated hero, modern feature showcase, bold CTA, and refined footer.
- * Optimized for light/dark themes with futuristic aesthetics and subtle interactivity.
+ * A refined SaaS landing page for Contesso Contest Tracker.
+ * Features a dynamic hero with subtle grid and gradients, polished features, elegant CTA, and modern footer.
+ * Enhanced with vibrant framer-motion animations and gradient accents throughout for light/dark themes.
  */
 export default function Landing() {
   const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
   };
 
-  const staggerChildren = {
+  const staggerContainer = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.3 } },
   };
 
-  const orbitAnimation = {
+  const particleAnimation = {
     hidden: { opacity: 0, scale: 0 },
     visible: {
-      opacity: [0.3, 0.5, 0.3],
-      scale: [1, 1.1, 1],
-      rotate: 360,
-      transition: { duration: 10, repeat: Infinity, ease: 'linear' },
+      opacity: [0.2, 0.4, 0.2],
+      scale: [1, 1.2, 1],
+      rotate: [0, 180, 360],
+      transition: { duration: 12, repeat: Infinity, ease: 'easeInOut' },
+    },
+  };
+
+  const textPulse = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 1, ease: 'easeOut', delay: 0.2 },
     },
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 text-gray-900 dark:text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 px-6">
+      <section className="relative py-32 md:py-48 px-6">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 via-purple-100/50 to-pink-100/50 dark:from-indigo-900/50 dark:via-purple-900/50 dark:to-pink-900/50" />
+          {/* Main Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-200/50 via-purple-200/50 to-pink-200/50 dark:from-indigo-900/30 dark:via-purple-900/30 dark:to-pink-900/30" />
+          {/* Subtle Grid Overlay with Two Layers */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-10 dark:opacity-8"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern id="fine-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="gray" strokeWidth="0.3" />
+              </pattern>
+              <pattern id="coarse-grid" width="90" height="90" patternUnits="userSpaceOnUse">
+                <path d="M 90 0 L 0 0 0 90" fill="none" stroke="gray" strokeWidth="0.7" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#fine-grid)" />
+            <rect width="100%" height="100%" fill="url(#coarse-grid)" />
+          </svg>
+          {/* Animated Gradient Particles */}
           <motion.div
-            variants={orbitAnimation}
+            variants={particleAnimation}
             initial="hidden"
             animate="visible"
-            className="absolute top-1/4 left-1/4 w-40 h-40 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full filter blur-2xl"
+            className="absolute top-16 left-16 w-36 h-36 bg-gradient-to-r from-indigo-400/20 to-purple-400/20 dark:from-indigo-500/15 dark:to-purple-500/15 rounded-full filter blur-3xl"
           />
           <motion.div
-            variants={orbitAnimation}
+            variants={particleAnimation}
             initial="hidden"
             animate="visible"
-            className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/20 dark:bg-purple-600/20 rounded-full filter blur-2xl"
+            className="absolute bottom-24 right-24 w-48 h-48 bg-gradient-to-r from-purple-400/20 to-pink-400/20 dark:from-purple-500/15 dark:to-pink-500/15 rounded-full filter blur-3xl"
           />
         </div>
 
         <motion.div
           initial="hidden"
           animate="visible"
-          variants={staggerChildren}
-          className="max-w-6xl mx-auto text-center relative z-10"
+          variants={staggerContainer}
+          className="max-w-7xl mx-auto text-center relative z-10"
         >
           <motion.h1
-            variants={fadeInUp}
-            className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight"
+            variants={textPulse}
+            className="text-4xl md:text-6xl font-extrabold mb-8 tracking-tight leading-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent"
           >
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-              Contesso
-            </span>{' '}
-            — Master Every Contest
+            Never Miss a Contest with Contesso
           </motion.h1>
           <motion.p
             variants={fadeInUp}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed font-medium"
           >
-            Your all-in-one hub for tracking coding contests, saving favorites, and unlocking expert solutions.
+            Track contests, save favorites, and master solutions—all in one sleek platform.
           </motion.p>
-          <motion.div variants={fadeInUp} className="flex justify-center gap-6">
+          <motion.div variants={fadeInUp} className="flex justify-center gap-8">
             <Link
               to="/contests"
               className={cn(
-                'inline-flex items-center px-8 py-3 text-lg font-medium text-white rounded-xl',
+                'inline-flex items-center px-8 py-3 text-lg font-medium text-white rounded-full',
                 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700',
                 'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300'
               )}
             >
-              Start Now <ArrowRight className="ml-2 h-5 w-5" />
+              Start Tracking <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               to="/pricing"
               className={cn(
-                'inline-flex items-center px-8 py-3 text-lg font-medium text-indigo-600 dark:text-indigo-400 rounded-xl',
-                'bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700',
-                'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300'
+                'inline-flex items-center px-8 py-3 text-lg font-medium text-indigo-600 dark:text-indigo-400 rounded-full',
+                'bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700',
+                'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 border border-indigo-200/50 dark:border-indigo-900/50'
               )}
             >
-              Pricing
+              Explore Pricing
             </Link>
           </motion.div>
         </motion.div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-32 px-6 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="max-w-7xl mx-auto"
+        >
           <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-900 dark:text-white"
+            className="text-3xl md:text-4xl font-bold text-center mb-20 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent"
           >
-            Elevate Your Coding Game
+            Your Competitive Advantage
           </motion.h2>
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerChildren}
-            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+            variants={staggerContainer}
+            className="grid gap-10 md:grid-cols-2 lg:grid-cols-4"
           >
             {[
               {
+                icon: BarChart2,
+                title: 'Live Tracking',
+                desc: 'Real-time updates from top platforms.',
+              },
+              {
                 icon: Trophy,
-                title: 'Track Contests',
-                desc: 'Live updates from Codeforces, LeetCode, and beyond.',
+                title: 'Contest Insights',
+                desc: 'Analyze past and upcoming contests.',
               },
               {
                 icon: Bookmark,
-                title: 'Bookmark Ease',
-                desc: 'Save contests with a single click.',
+                title: 'Smart Bookmarks',
+                desc: 'Save contests with ease.',
               },
               {
                 icon: Video,
-                title: 'Solution Mastery',
-                desc: 'Dive into curated video explanations.',
+                title: 'Solution Vault',
+                desc: 'Expert video solutions on demand.',
               },
             ].map((feature, index) => (
               <motion.div
                 key={index}
                 variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                 className={cn(
-                  'p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg',
-                  'transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-800'
+                  'p-8 bg-white/90 dark:bg-gray-800/90 rounded-xl shadow-sm',
+                  'hover:shadow-md transition-all duration-300 border border-gray-100/50 dark:border-gray-800/50'
                 )}
               >
-                <feature.icon className="h-10 w-10 text-indigo-600 dark:text-indigo-400 mb-4 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
+                <feature.icon className="h-10 w-10 text-indigo-600 dark:text-indigo-400 mb-6 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-center">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
@@ -150,7 +180,7 @@ export default function Landing() {
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* CTA Section */}
@@ -158,29 +188,29 @@ export default function Landing() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={fadeInUp}
-        className="py-20 px-6 bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20"
+        variants={staggerContainer}
+        className="py-32 px-6 bg-gradient-to-r from-indigo-100/40 via-purple-100/40 to-pink-100/40 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20"
       >
         <div className="max-w-5xl mx-auto text-center">
           <motion.h2
             variants={fadeInUp}
-            className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight"
+            className="text-3xl md:text-4xl font-bold mb-8 tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent"
           >
-            Join the Coding Elite
+            Ready to Dominate Contests?
           </motion.h2>
           <motion.p
             variants={fadeInUp}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed max-w-xl mx-auto"
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto"
           >
-            Empower your skills with tools designed for winners.
+            Elevate your coding skills with a platform designed for success.
           </motion.p>
           <motion.div variants={fadeInUp}>
             <Link
               to="/contests"
               className={cn(
-                'inline-flex items-center px-10 py-4 text-lg font-medium text-white rounded-xl',
-                'bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl',
-                'transition-all duration-300 transform hover:-translate-y-1'
+                'inline-flex items-center px-10 py-4 text-lg font-medium text-white rounded-full',
+                'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700',
+                'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300'
               )}
             >
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
@@ -190,40 +220,41 @@ export default function Landing() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+      <footer className="py-24 px-6 bg-gradient-to-t from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200/20 dark:border-gray-700/20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-extrabold text-gray-900 dark:text-white">Contesso</span>
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                Contesso
+              </span>
             </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4 leading-relaxed">
-              Your gateway to coding excellence.
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-6 leading-relaxed">
+              Your partner in coding excellence.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Explore</h3>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Explore</h3>
+            <ul className="space-y-4">
               <li>
-                <Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
+                <Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
                   Contests
                 </Link>
               </li>
               <li>
-                <Link to="/bookmarks" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
+                <Link to="/bookmarks" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
                   Bookmarks
                 </Link>
-                  Bookmarks
-                </li>
+              </li>
               <li>
-                <Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
+                <Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
                   Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
+                <Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
                   Pricing
                 </Link>
               </li>
@@ -232,15 +263,15 @@ export default function Landing() {
 
           {/* Socials */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connect</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Connect</h3>
             <div className="flex space-x-6">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
                 <Twitter className="h-6 w-6" />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
                 <Github className="h-6 w-6" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
                 <Linkedin className="h-6 w-6" />
               </a>
             </div>
@@ -248,24 +279,24 @@ export default function Landing() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Stay Updated</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Subscribe for contest updates.</p>
-            <form className="flex items-center space-x-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Stay Updated</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">Subscribe for contest alerts.</p>
+            <form className="flex items-center space-x-3">
               <input
                 type="email"
                 placeholder="Your email"
-                className="p-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
+                className="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white border border-gray-200/50 dark:border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all duration-200 w-full"
               />
               <button
                 type="submit"
-                className="p-2 bg-indigo-600 rounded-md text-white hover:bg-indigo-700 transition-all duration-200"
+                className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full text-white hover:from-indigo-700 hover:to-purple-700 transition-all duration-200"
               >
                 <Mail className="h-5 w-5" />
               </button>
             </form>
           </div>
         </div>
-        <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-16 text-center text-sm text-gray-600 dark:text-gray-400">
           © {new Date().getFullYear()} Contesso. All rights reserved.
         </div>
       </footer>
