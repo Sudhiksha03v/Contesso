@@ -4,11 +4,6 @@ import { ArrowRight, BarChart2, Trophy, Bookmark, Video, Twitter, Github, Linked
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
 
-/**
- * A refined SaaS landing page for Contesso Contest Tracker.
- * Features a dynamic hero with subtle grid and gradients, polished features, elegant CTA, and modern footer.
- * Enhanced with vibrant framer-motion animations and gradient accents throughout for light/dark themes.
- */
 export default function Landing() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -32,25 +27,15 @@ export default function Landing() {
 
   const textPulse = {
     hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 1, ease: 'easeOut', delay: 0.2 },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: 'easeOut', delay: 0.2 } },
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 text-gray-900 dark:text-white overflow-hidden">
-      {/* Hero Section */}
       <section className="relative py-32 md:py-48 px-6">
         <div className="absolute inset-0 -z-10">
-          {/* Main Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-200/50 via-purple-200/50 to-pink-200/50 dark:from-indigo-900/30 dark:via-purple-900/30 dark:to-pink-900/30" />
-          {/* Subtle Grid Overlay with Two Layers */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-10 dark:opacity-8"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg className="absolute inset-0 w-full h-full opacity-10 dark:opacity-8" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="fine-grid" width="30" height="30" patternUnits="userSpaceOnUse">
                 <path d="M 30 0 L 0 0 0 30" fill="none" stroke="gray" strokeWidth="0.3" />
@@ -62,7 +47,6 @@ export default function Landing() {
             <rect width="100%" height="100%" fill="url(#fine-grid)" />
             <rect width="100%" height="100%" fill="url(#coarse-grid)" />
           </svg>
-          {/* Animated Gradient Particles */}
           <motion.div
             variants={particleAnimation}
             initial="hidden"
@@ -120,7 +104,6 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
       <section className="py-32 px-6 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <motion.div
           initial="hidden"
@@ -140,26 +123,10 @@ export default function Landing() {
             className="grid gap-10 md:grid-cols-2 lg:grid-cols-4"
           >
             {[
-              {
-                icon: BarChart2,
-                title: 'Live Tracking',
-                desc: 'Real-time updates from top platforms.',
-              },
-              {
-                icon: Trophy,
-                title: 'Contest Insights',
-                desc: 'Analyze past and upcoming contests.',
-              },
-              {
-                icon: Bookmark,
-                title: 'Smart Bookmarks',
-                desc: 'Save contests with ease.',
-              },
-              {
-                icon: Video,
-                title: 'Solution Vault',
-                desc: 'Expert video solutions on demand.',
-              },
+              { icon: BarChart2, title: 'Live Tracking', desc: 'Real-time updates from top platforms.' },
+              { icon: Trophy, title: 'Contest Insights', desc: 'Analyze past and upcoming contests.' },
+              { icon: Bookmark, title: 'Smart Bookmarks', desc: 'Save contests with ease.' },
+              { icon: Video, title: 'Solution Vault', desc: 'Expert video solutions on demand.' },
             ].map((feature, index) => (
               <motion.div
                 key={index}
@@ -171,19 +138,14 @@ export default function Landing() {
                 )}
               >
                 <feature.icon className="h-10 w-10 text-indigo-600 dark:text-indigo-400 mb-6 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-center">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
-                  {feature.desc}
-                </p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-center">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
       </section>
 
-      {/* CTA Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
@@ -219,65 +181,33 @@ export default function Landing() {
         </div>
       </motion.section>
 
-      {/* Footer */}
       <footer className="py-24 px-6 bg-gradient-to-t from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200/20 dark:border-gray-700/20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-          {/* Brand */}
           <div>
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                 Contesso
               </span>
             </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-6 leading-relaxed">
-              Your partner in coding excellence.
-            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-6 leading-relaxed">Your partner in coding excellence.</p>
           </div>
-
-          {/* Navigation */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Explore</h3>
             <ul className="space-y-4">
-              <li>
-                <Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
-                  Contests
-                </Link>
-              </li>
-              <li>
-                <Link to="/bookmarks" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
-                  Bookmarks
-                </Link>
-              </li>
-              <li>
-                <Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
-                  Solutions
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">
-                  Pricing
-                </Link>
-              </li>
+              <li><Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">Contests</Link></li>
+              <li><Link to="/bookmarks" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">Bookmarks</Link></li>
+              <li><Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">Solutions</Link></li>
+              <li><Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm transition-colors duration-200">Pricing</Link></li>
             </ul>
           </div>
-
-          {/* Socials */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Connect</h3>
             <div className="flex space-x-6">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
-                <Twitter className="h-6 w-6" />
-              </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
-                <Github className="h-6 w-6" />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110">
-                <Linkedin className="h-6 w-6" />
-              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110"><Twitter className="h-6 w-6" /></a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110"><Github className="h-6 w-6" /></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 hover:scale-110"><Linkedin className="h-6 w-6" /></a>
             </div>
           </div>
-
-          {/* Newsletter */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Stay Updated</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">Subscribe for contest alerts.</p>

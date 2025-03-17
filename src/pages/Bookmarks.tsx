@@ -14,7 +14,6 @@ interface Bookmark {
 export default function Bookmarks() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
-  // Fetch bookmarked contests from Supabase
   const fetchBookmarks = async () => {
     const { data, error } = await supabase.from('bookmarks').select('*');
     if (!error && data) {
@@ -26,7 +25,6 @@ export default function Bookmarks() {
     fetchBookmarks();
   }, []);
 
-  // Calculate time remaining
   const getTimeRemaining = (startTime: string) => {
     const now = new Date();
     const start = new Date(startTime);

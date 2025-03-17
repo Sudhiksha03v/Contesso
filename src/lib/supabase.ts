@@ -1,5 +1,6 @@
+// src/lib/supabase.ts
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from './types'; // Generated types
+import type { Database } from './types';
 
 // Retrieve environment variables
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -13,8 +14,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // Initialize Supabase client with type support
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: true, // Persist auth session in localStorage
-    autoRefreshToken: true, // Auto-refresh expired tokens
-    detectSessionInUrl: true, // Detect session from URL (e.g., OAuth)
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
   },
 });

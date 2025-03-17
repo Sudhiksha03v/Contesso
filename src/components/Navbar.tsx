@@ -1,6 +1,7 @@
+// src/components/Navbar.tsx
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Trophy, Bookmark, Video, DollarSign, Settings, Menu, X } from 'lucide-react';
+import { Trophy, Bookmark, Video, DollarSign, Settings, Menu, X, Calendar } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { cn } from '../lib/utils';
 import AuthModal from './AuthModal';
@@ -12,7 +13,7 @@ import { User } from '@supabase/supabase-js';
  * An enhanced, modern navigation bar for the Contesso app.
  * Features a sleek design with glassmorphism, gradient hover effects, and improved mobile UX.
  * Links to user pages and admin panel, with auth integration and scroll-based visibility.
- * Dashboard link removed as per request.
+ * Calendar link added next to Contests.
  */
 const Navbar = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const Navbar = () => {
 
   const navItems = [
     { path: '/contests', label: 'Contests', icon: Trophy },
+    { path: '/calendar', label: 'Calendar', icon: Calendar }, // Added Calendar link
     { path: '/bookmarks', label: 'Bookmarks', icon: Bookmark },
     { path: '/solutions', label: 'Solutions', icon: Video },
     { path: '/pricing', label: 'Pricing', icon: DollarSign },

@@ -1,4 +1,4 @@
-// Generated types from Supabase schema (simplified for your tables)
+// src/lib/types.ts
 export type Database = {
   public: {
     Tables: {
@@ -98,7 +98,6 @@ export type Database = {
   };
 };
 
-// Export simplified interfaces for easier use
 export type Contest = Database['public']['Tables']['contests']['Row'];
 export type Bookmark = Database['public']['Tables']['bookmarks']['Row'];
 export type YoutubePlaylist = Database['public']['Tables']['youtube_playlists']['Row'];
