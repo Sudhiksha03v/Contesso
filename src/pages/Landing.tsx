@@ -1,13 +1,13 @@
 // src/pages/Landing.tsx
 import { Link } from 'react-router-dom';
-import { ArrowRight, BarChart2, Trophy, Bookmark, Video, Twitter, Github, Linkedin } from 'lucide-react';
+import { ArrowRight, Trophy, Bookmark, Video, Twitter, Github, Linkedin, Mail } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
 
 /**
- * A highly modernized landing page for Contesso Contest Tracker.
- * Features a refined hero, animated features, sleek CTA, and an improved footer with socials.
- * Designed with cutting-edge aesthetics: gradients, animations, and glassmorphism.
+ * A cutting-edge landing page for Contesso Contest Tracker.
+ * Features a sleek animated hero, modern feature showcase, bold CTA, and refined footer.
+ * Optimized for light/dark themes with futuristic aesthetics and subtle interactivity.
  */
 export default function Landing() {
   const fadeInUp = {
@@ -15,30 +15,69 @@ export default function Landing() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
+  const staggerChildren = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
+  };
+
+  const orbitAnimation = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: {
+      opacity: [0.3, 0.5, 0.3],
+      scale: [1, 1.1, 1],
+      rotate: 360,
+      transition: { duration: 10, repeat: Infinity, ease: 'linear' },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-hidden">
       {/* Hero Section */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="relative py-24 md:py-36 px-6"
-      >
-        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-pink-500/10 -z-10" />
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-500 dark:to-pink-400 bg-clip-text text-transparent mb-6 tracking-tight">
-            Never miss a single code contest with Contesso
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Your ultimate companion for tracking coding contests, saving favorites, and mastering solutions.
-          </p>
-          <div className="flex justify-center gap-6">
+      <section className="relative py-24 md:py-32 px-6">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 via-purple-100/50 to-pink-100/50 dark:from-indigo-900/50 dark:via-purple-900/50 dark:to-pink-900/50" />
+          <motion.div
+            variants={orbitAnimation}
+            initial="hidden"
+            animate="visible"
+            className="absolute top-1/4 left-1/4 w-40 h-40 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full filter blur-2xl"
+          />
+          <motion.div
+            variants={orbitAnimation}
+            initial="hidden"
+            animate="visible"
+            className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/20 dark:bg-purple-600/20 rounded-full filter blur-2xl"
+          />
+        </div>
+
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={staggerChildren}
+          className="max-w-6xl mx-auto text-center relative z-10"
+        >
+          <motion.h1
+            variants={fadeInUp}
+            className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight"
+          >
+            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              Contesso
+            </span>{' '}
+            — Master Every Contest
+          </motion.h1>
+          <motion.p
+            variants={fadeInUp}
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
+            Your all-in-one hub for tracking coding contests, saving favorites, and unlocking expert solutions.
+          </motion.p>
+          <motion.div variants={fadeInUp} className="flex justify-center gap-6">
             <Link
-              to="/dashboard"
+              to="/contests"
               className={cn(
-                'inline-flex items-center px-8 py-3 text-lg font-semibold text-white rounded-full',
+                'inline-flex items-center px-8 py-3 text-lg font-medium text-white rounded-xl',
                 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700',
-                'shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300'
+                'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300'
               )}
             >
               Start Now <ArrowRight className="ml-2 h-5 w-5" />
@@ -46,66 +85,62 @@ export default function Landing() {
             <Link
               to="/pricing"
               className={cn(
-                'inline-flex items-center px-8 py-3 text-lg font-semibold text-indigo-600 dark:text-indigo-400 rounded-full',
-                'bg-white/80 dark:bg-gray-800/80 hover:bg-white/90 dark:hover:bg-gray-700/90',
-                'shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300'
+                'inline-flex items-center px-8 py-3 text-lg font-medium text-indigo-600 dark:text-indigo-400 rounded-xl',
+                'bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700',
+                'shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300'
               )}
             >
-              Explore Pricing
+              Pricing
             </Link>
-          </div>
-        </div>
-        <div className="absolute top-0 left-0 w-80 h-80 bg-indigo-400/10 rounded-full filter blur-3xl -z-20 animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400/10 rounded-full filter blur-3xl -z-20 animate-pulse" />
-      </motion.section>
+          </motion.div>
+        </motion.div>
+      </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+            className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-900 dark:text-white"
           >
-            Unleash Your Coding Potential
+            Elevate Your Coding Game
           </motion.h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerChildren}
+            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          >
             {[
               {
-                icon: BarChart2,
-                title: 'Live Contest Tracking',
-                desc: 'Real-time updates from top platforms like Codeforces and LeetCode.',
-              },
-              {
                 icon: Trophy,
-                title: 'Contest Insights',
-                desc: 'Analyze upcoming and past contests with ease.',
+                title: 'Track Contests',
+                desc: 'Live updates from Codeforces, LeetCode, and beyond.',
               },
               {
                 icon: Bookmark,
-                title: 'Intelligent Bookmarks',
-                desc: 'Save contests effortlessly for quick access.',
+                title: 'Bookmark Ease',
+                desc: 'Save contests with a single click.',
               },
               {
                 icon: Video,
-                title: 'Solution Hub',
-                desc: 'Curated video solutions to boost your skills.',
+                title: 'Solution Mastery',
+                desc: 'Dive into curated video explanations.',
               },
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
                 variants={fadeInUp}
                 className={cn(
-                  'p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-lg',
-                  'hover:bg-white/70 dark:hover:bg-gray-700/70 hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300'
+                  'p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg',
+                  'transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-800'
                 )}
               >
-                <feature.icon className="h-10 w-10 text-indigo-500 mb-4 mx-auto" />
+                <feature.icon className="h-10 w-10 text-indigo-600 dark:text-indigo-400 mb-4 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
                   {feature.title}
                 </h3>
@@ -114,7 +149,7 @@ export default function Landing() {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -124,39 +159,46 @@ export default function Landing() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeInUp}
-        className="py-24 px-6 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 text-white"
+        className="py-20 px-6 bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20"
       >
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">
-            Join the Future of Coding
-          </h2>
-          <p className="text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
-            Empower your coding journey with tools designed for winners.
-          </p>
-          <Link
-            to="/dashboard"
-            className={cn(
-              'inline-flex items-center px-10 py-4 text-lg font-semibold text-indigo-600 bg-white rounded-full',
-              'shadow-xl hover:shadow-2xl hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300'
-            )}
+          <motion.h2
+            variants={fadeInUp}
+            className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight"
           >
-            Get Started <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+            Join the Coding Elite
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed max-w-xl mx-auto"
+          >
+            Empower your skills with tools designed for winners.
+          </motion.p>
+          <motion.div variants={fadeInUp}>
+            <Link
+              to="/contests"
+              className={cn(
+                'inline-flex items-center px-10 py-4 text-lg font-medium text-white rounded-xl',
+                'bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl',
+                'transition-all duration-300 transform hover:-translate-y-1'
+              )}
+            >
+              Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </motion.div>
         </div>
       </motion.section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-700/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+      <footer className="py-16 px-6 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-500 dark:to-pink-400 bg-clip-text text-transparent tracking-tight uppercase">
-                Contesso
-              </span>
+              <span className="text-2xl font-extrabold text-gray-900 dark:text-white">Contesso</span>
             </Link>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 leading-relaxed">
-              Your all-in-one platform for coding contest success.
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4 leading-relaxed">
+              Your gateway to coding excellence.
             </p>
           </div>
 
@@ -165,22 +207,23 @@ export default function Landing() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Explore</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/dashboard" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
+                <Link to="/contests" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
                   Contests
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
+                <Link to="/bookmarks" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
+                  Bookmarks
+                </Link>
+                  Bookmarks
+                </li>
+              <li>
+                <Link to="/solutions" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
                   Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
+                <Link to="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm">
                   Pricing
                 </Link>
               </li>
@@ -190,38 +233,40 @@ export default function Landing() {
           {/* Socials */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connect</h3>
-            <div className="flex space-x-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400">
+            <div className="flex space-x-6">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
                 <Twitter className="h-6 w-6" />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
                 <Github className="h-6 w-6" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200">
                 <Linkedin className="h-6 w-6" />
               </a>
             </div>
           </div>
 
-          {/* Legal */}
+          {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 text-sm">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-              © {new Date().getFullYear()} Contesso. All rights reserved.
-            </p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Stay Updated</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Subscribe for contest updates.</p>
+            <form className="flex items-center space-x-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="p-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
+              />
+              <button
+                type="submit"
+                className="p-2 bg-indigo-600 rounded-md text-white hover:bg-indigo-700 transition-all duration-200"
+              >
+                <Mail className="h-5 w-5" />
+              </button>
+            </form>
           </div>
+        </div>
+        <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+          © {new Date().getFullYear()} Contesso. All rights reserved.
         </div>
       </footer>
     </div>
